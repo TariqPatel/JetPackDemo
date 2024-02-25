@@ -102,7 +102,7 @@ fun CurrencyConverterView(viewModel: MyViewModel = viewModel()) {
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            Text("Update List")
+            Text("Fetch values for your BTC")
         }
         LazyColumn(
             modifier = Modifier
