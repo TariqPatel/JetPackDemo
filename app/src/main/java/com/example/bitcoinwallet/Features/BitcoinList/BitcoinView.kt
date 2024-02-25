@@ -136,15 +136,21 @@ fun CurrencyConverterView(bitCoinListViewModel: MyViewModel = viewModel()) {
                     )
                     var fluctuationValue = ""
                     var color = Color.Black
-                    if (currency.fluctuationValue == FluctuationState.EQUAL) {
-                        fluctuationValue = "No Change in value"
-                    } else if (currency.fluctuationValue == FluctuationState.GAIN) {
-                        fluctuationValue = "Whoooo! This has increased!"
-                        color = Color.White
-                    } else if (currency.fluctuationValue == FluctuationState.LOSS) {
-                        fluctuationValue = "Eish! This has gone down."
-                        color = Color.Red
+
+                    when (currency.fluctuationValue) {
+                        FluctuationState.EQUAL -> {
+                            fluctuationValue = "No Change in value"
+                        }
+                        FluctuationState.GAIN -> {
+                            fluctuationValue = "Whoooo! This has increased!"
+                            color = Color.White
+                        }
+                        FluctuationState.LOSS -> {
+                            fluctuationValue = "Eish! This has gone down."
+                            color = Color.Red
+                        }
                     }
+
                     Text(
                         text = fluctuationValue,
                         modifier = Modifier

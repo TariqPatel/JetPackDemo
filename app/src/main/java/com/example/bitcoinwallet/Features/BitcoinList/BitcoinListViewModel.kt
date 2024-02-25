@@ -48,12 +48,12 @@ class MyViewModel : ViewModel() {
         _toastMessage.value = message
     }
 
+    //DEPRECATED but keeping here for the assessment (Would usually remove it in a normal project)
     fun fetchCurrencyList(btcOwned: Double) {
         setButtonEnabled(false)
         val baseCurrency = Constants.BASE_CURRENCY
         val symbols = Constants.SYMBOLS
         val apiKey = Constants.API_KEY
-
         val call = RetrofitClient.currencyApiService.getCurrencyRates(baseCurrency, symbols, apiKey)
 
         call.enqueue(object : Callback<CurrencyResponse> {
@@ -93,7 +93,6 @@ class MyViewModel : ViewModel() {
             }
         })
     }
-
 
     fun fetchFluctuationCurrencyList(btcOwned: Double) {
         setButtonEnabled(false)
@@ -171,15 +170,16 @@ class MyViewModel : ViewModel() {
     }
 
     fun calculateRateDifference(startRate: Double?, endRate: Double?): FluctuationState {
-        if (endRate != null && startRate != null) {
-            if (endRate == startRate) {
-                return FluctuationState.EQUAL
-            } else if (endRate > startRate) {
-                return FluctuationState.GAIN
-            } else if (endRate < startRate) {
-                return FluctuationState.LOSS
+        return when {
+            endRate != null && startRate != null -> {
+                when {
+                    endRate == startRate -> FluctuationState.EQUAL
+                    endRate > startRate -> FluctuationState.GAIN
+                    endRate < startRate -> FluctuationState.LOSS
+                    else -> FluctuationState.EQUAL
+                }
             }
+            else -> FluctuationState.EQUAL
         }
-        return FluctuationState.EQUAL
     }
 }
