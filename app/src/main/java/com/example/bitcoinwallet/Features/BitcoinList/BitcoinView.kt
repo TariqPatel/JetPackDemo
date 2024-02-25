@@ -36,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -107,7 +108,7 @@ fun CurrencyConverterView(bitCoinListViewModel: BitcoinListViewModel = viewModel
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            Text(fetchListBtnText)
+            Text(fetchListBtnText.uppercase())
         }
         if (bitCoinListViewModel.currencyList.value.isEmpty()) {
             Text(
@@ -120,9 +121,10 @@ fun CurrencyConverterView(bitCoinListViewModel: BitcoinListViewModel = viewModel
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(20.dp)
-                    .clip(RoundedCornerShape(20.dp)) // Adjust the corner radius as needed
-                    .background(Color.Green)
+                    .padding(15.dp)
+                    .clip(shape = MaterialTheme.shapes.medium) // Adjust the corner radius as needed
+                    .background(Color.Black)
+                    .border(2.dp, Color.Black)
             ) {
                 itemsIndexed(currencyList) { index, currency ->
                     Text(
@@ -131,11 +133,11 @@ fun CurrencyConverterView(bitCoinListViewModel: BitcoinListViewModel = viewModel
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp),
-                        color = Color.Black,
+                        color = Color.White,
                         style = MaterialTheme.typography.titleLarge
                     )
                     var fluctuationValue = ""
-                    var color = Color.Black
+                    var color = Color.White
 
                     when (currency.fluctuationValue) {
                         FluctuationState.EQUAL -> {
@@ -143,14 +145,13 @@ fun CurrencyConverterView(bitCoinListViewModel: BitcoinListViewModel = viewModel
                         }
                         FluctuationState.GAIN -> {
                             fluctuationValue = "Whoooo! This has increased!"
-                            color = Color.White
+                            color = Color.Green
                         }
                         FluctuationState.LOSS -> {
                             fluctuationValue = "Eish! This has gone down."
                             color = Color.Red
                         }
                     }
-
                     Text(
                         text = fluctuationValue,
                         modifier = Modifier
