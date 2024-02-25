@@ -1,4 +1,4 @@
-package com.example.bitcoinwallet.Features.Home
+package com.example.bitcoinwallet.Features.BitcoinList
 
 import android.content.Context
 import android.os.Bundle

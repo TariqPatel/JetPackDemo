@@ -15,7 +15,7 @@
         android:theme="@style/Theme.BitcoinWallet"
         tools:targetApi="31">
         <activity
-            android:name=".Features.Home.MainActivity"
+            android:name=".Features.BitcoinList.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.BitcoinWallet">

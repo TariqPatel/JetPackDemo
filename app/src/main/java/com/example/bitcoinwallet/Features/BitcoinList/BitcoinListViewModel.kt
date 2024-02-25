@@ -1,4 +1,4 @@
-package com.example.bitcoinwallet.Features.Home
+package com.example.bitcoinwallet.Features.BitcoinList
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
