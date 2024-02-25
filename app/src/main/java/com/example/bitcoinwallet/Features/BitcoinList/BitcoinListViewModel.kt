@@ -15,16 +15,32 @@ import retrofit2.Call
 import retrofit2.Response
 
 class MyViewModel : ViewModel() {
+    //CurrencyList
     private val _currencyList = mutableStateOf <List<CurrencyModel>>(emptyList())
     val currencyList: State<List<CurrencyModel>> = _currencyList
     fun updateDataList(currencyList: List<CurrencyModel>) {
         _currencyList.value = currencyList
     }
 
+    //Boolean for enabling and disabling button
     private val _isButtonEnabled = mutableStateOf(true)
     val isButtonEnabled: State<Boolean> get() = _isButtonEnabled
     fun setButtonEnabled(isEnabled: Boolean) {
         _isButtonEnabled.value = isEnabled
+    }
+
+    //Flag for showing toasts for some error handling
+    private val _messageFlag = mutableStateOf(false)
+    val messageFlag: State<Boolean> get() = _messageFlag
+    fun toggleMessageFlag() {
+        _messageFlag.value = !_messageFlag.value
+    }
+
+    //String for message shown to user in toast
+    private val _toastMessage = mutableStateOf("")
+    val toastMessage: State<String> get() = _toastMessage
+    private fun showToastMessage(message: String) {
+        _toastMessage.value = message
     }
 
     fun fetchCurrencyList(btcOwned: Double) {
@@ -57,13 +73,15 @@ class MyViewModel : ViewModel() {
                     // Update ViewModel with the currency list
                     updateDataList(currencyList)
                 } else {
-                    println("API call unsuccessful")
+                    toggleMessageFlag()
+                    showToastMessage(message = "API call unsuccessful")
                 }
             }
 
             override fun onFailure(call: Call<CurrencyResponse>, t: Throwable) {
+                toggleMessageFlag()
+                showToastMessage(message = "API call unsuccessful")
                 setButtonEnabled(true)
-                println(t)
             }
         })
     }

@@ -3,6 +3,7 @@ package com.example.bitcoinwallet.Features.BitcoinList
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,6 +58,16 @@ fun CurrencyConverterView(bitCoinListViewModel: MyViewModel = viewModel()) {
     val bitcoinInputTitle: String = stringResource(id = R.string.bitcoin_input_text)
     val currencyText: String = stringResource(id = R.string.currency)
     val valueText: String = stringResource(id = R.string.value)
+
+    val booleanFlag by bitCoinListViewModel.messageFlag
+    val toastMessage by bitCoinListViewModel.toastMessage
+
+    if (booleanFlag) {
+        LaunchedEffect(booleanFlag) {
+            Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+            bitCoinListViewModel.toggleMessageFlag()
+        }
+    }
 
     Column(
         modifier = Modifier
