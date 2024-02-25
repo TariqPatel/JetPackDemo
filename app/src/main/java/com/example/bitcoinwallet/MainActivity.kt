@@ -58,7 +58,10 @@ fun CurrencyConverterViewPreview() {
 
 @Composable
 fun CurrencyConverterView(viewModel: MyViewModel = viewModel()) {
-    var inputValue by remember { mutableStateOf(1.0) }
+    val appPreferences = AppPreferences(LocalContext.current)
+    var inputValue by remember {
+        mutableStateOf(appPreferences.getInputValue())
+    }
     val currencyList by viewModel.currencyList
     val context = LocalContext.current
 
@@ -71,9 +74,8 @@ fun CurrencyConverterView(viewModel: MyViewModel = viewModel()) {
             value = inputValue.toString(),
             onValueChange = {
                 inputValue = it.toDoubleOrNull() ?: 0.0
-                viewModel.updateInputValue(inputValue = inputValue)
             },
-            label = { Text("Enter Amount") },
+            label = { Text("Enter BTC amount you own") },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
@@ -83,13 +85,15 @@ fun CurrencyConverterView(viewModel: MyViewModel = viewModel()) {
             keyboardActions = KeyboardActions(
                 onDone = {
                     hideKeyboard(context)
+                    appPreferences.saveInputValue(inputValue)
                 }
             )
         )
 
         Button(
             onClick = {
-                viewModel.makeApiCall()
+                viewModel.makeApiCall(btcOwned = inputValue)
+                appPreferences.saveInputValue(inputValue)
                 hideKeyboard(context)
             },
             modifier = Modifier

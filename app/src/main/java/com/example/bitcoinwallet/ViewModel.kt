@@ -13,17 +13,12 @@ class MyViewModel : ViewModel() {
     private val _currencyList = mutableStateOf <List<CurrencyModel>>(emptyList())
     val currencyList: State<List<CurrencyModel>> = _currencyList
     private val _inputValue = mutableStateOf(1.0)
-    val inputValue: State<Double> = _inputValue
 
     fun updateDataList(currencyList: List<CurrencyModel>) {
         _currencyList.value = currencyList
     }
 
-    fun updateInputValue(inputValue: Double) {
-        _inputValue.value = inputValue
-    }
-
-    fun makeApiCall() {
+    fun makeApiCall(btcOwned: Double) {
         val baseUrl = "https://api.apilayer.com/fixer/latest"
         val baseCurrency = "BTC"
         val symbols = "ZAR,USD,AUD"
@@ -44,9 +39,9 @@ class MyViewModel : ViewModel() {
                 val gson = Gson()
                 val apiResponse = gson.fromJson(responseBody, CurrencyResponse::class.java)
 
-                val zarCalculated = apiResponse.rates.zar * inputValue.value
-                val usdCalculated = apiResponse.rates.usd * inputValue.value
-                val audCalculated = apiResponse.rates.aud * inputValue.value
+                val zarCalculated = apiResponse.rates.zar * btcOwned
+                val usdCalculated = apiResponse.rates.usd * btcOwned
+                val audCalculated = apiResponse.rates.aud * btcOwned
 
                 if (apiResponse.success) {
                     val zarCurrency = CurrencyModel(currencyName = "ZAR",
