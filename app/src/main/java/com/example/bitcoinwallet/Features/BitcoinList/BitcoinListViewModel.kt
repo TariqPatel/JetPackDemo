@@ -2,11 +2,13 @@ package com.example.bitcoinwallet.Features.BitcoinList
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import com.example.bitcoinwallet.API.ResponseModels.CurrencyResponse
 import com.example.bitcoinwallet.API.RetrofitClient
 import com.example.bitcoinwallet.Helpers.Constants
 import com.example.bitcoinwallet.Models.CurrencyModel
+import com.example.bitcoinwallet.R
 
 import retrofit2.Callback
 import retrofit2.Call
@@ -15,7 +17,6 @@ import retrofit2.Response
 class MyViewModel : ViewModel() {
     private val _currencyList = mutableStateOf <List<CurrencyModel>>(emptyList())
     val currencyList: State<List<CurrencyModel>> = _currencyList
-
     fun updateDataList(currencyList: List<CurrencyModel>) {
         _currencyList.value = currencyList
     }

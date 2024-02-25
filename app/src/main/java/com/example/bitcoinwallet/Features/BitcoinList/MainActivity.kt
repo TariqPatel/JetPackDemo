@@ -29,12 +29,14 @@ import com.example.bitcoinwallet.ui.theme.BitcoinWalletTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bitcoinwallet.Helpers.AppPreferences
+import com.example.bitcoinwallet.R
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +72,11 @@ fun CurrencyConverterView(bitCoinListViewModel: MyViewModel = viewModel()) {
     val currencyList by bitCoinListViewModel.currencyList
     val context = LocalContext.current
 
+    //Text in View
+    val fetchListBtnText: String = stringResource(id = R.string.fetch_bitcoin_btn)
+    val viewBitcoinDescriptionText: String = stringResource(id = R.string.view_bitcoin_list_description)
+    val bitcoinInputTitle: String = stringResource(id = R.string.bitcoin_input_text)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -80,7 +87,7 @@ fun CurrencyConverterView(bitCoinListViewModel: MyViewModel = viewModel()) {
             onValueChange = {
                 bitCoinAmount = it.toDoubleOrNull() ?: 0.0
             },
-            label = { Text("Enter BTC amount you own") },
+            label = { Text(bitcoinInputTitle) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
@@ -106,11 +113,11 @@ fun CurrencyConverterView(bitCoinListViewModel: MyViewModel = viewModel()) {
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            Text("Fetch values for your BTC")
+            Text(fetchListBtnText)
         }
         if (bitCoinListViewModel.currencyList.value.isEmpty()) {
             Text(
-                text = "Your Bitcoin value for different currencies will be shown here",
+                text = viewBitcoinDescriptionText,
                 color = Color.Black,
                 style = MaterialTheme.typography.displaySmall,
                 textAlign = TextAlign.Center

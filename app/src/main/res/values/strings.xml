@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BitcoinWallet</string>
+    <string name="bitcoin_input_text">Enter BTC amount you own</string>
+    <string name="fetch_bitcoin_btn">Fetch values for your BTC</string>
+    <string name="view_bitcoin_list_description"> Your Bitcoin value for different currencies will be shown here</string>
 </resources>
+
