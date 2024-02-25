@@ -62,12 +62,12 @@ fun CurrencyConverterViewPreview() {
 }
 
 @Composable
-fun CurrencyConverterView(viewModel: MyViewModel = viewModel()) {
+fun CurrencyConverterView(bitCoinListViewModel: MyViewModel = viewModel()) {
     val appPreferences = AppPreferences(LocalContext.current)
-    var inputValue by remember {
+    var bitCoinAmount by remember {
         mutableStateOf(appPreferences.getInputValue())
     }
-    val currencyList by viewModel.currencyList
+    val currencyList by bitCoinListViewModel.currencyList
     val context = LocalContext.current
 
     Column(
@@ -76,9 +76,9 @@ fun CurrencyConverterView(viewModel: MyViewModel = viewModel()) {
             .padding(16.dp)
     ) {
         OutlinedTextField(
-            value = inputValue.toString(),
+            value = bitCoinAmount.toString(),
             onValueChange = {
-                inputValue = it.toDoubleOrNull() ?: 0.0
+                bitCoinAmount = it.toDoubleOrNull() ?: 0.0
             },
             label = { Text("Enter BTC amount you own") },
             modifier = Modifier
@@ -91,15 +91,15 @@ fun CurrencyConverterView(viewModel: MyViewModel = viewModel()) {
             keyboardActions = KeyboardActions(
                 onDone = {
                     hideKeyboard(context)
-                    appPreferences.saveInputValue(inputValue)
+                    appPreferences.saveInputValue(bitCoinAmount)
                 }
             )
         )
 
         Button(
             onClick = {
-                viewModel.fetchData(btcOwned = inputValue)
-                appPreferences.saveInputValue(inputValue)
+                bitCoinListViewModel.fetchCurrencyList(btcOwned = bitCoinAmount)
+                appPreferences.saveInputValue(bitCoinAmount)
                 hideKeyboard(context)
             },
             modifier = Modifier
@@ -108,7 +108,7 @@ fun CurrencyConverterView(viewModel: MyViewModel = viewModel()) {
         ) {
             Text("Fetch values for your BTC")
         }
-        if (viewModel.currencyList.value.isEmpty()) {
+        if (bitCoinListViewModel.currencyList.value.isEmpty()) {
             Text(
                 text = "Your Bitcoin value for different currencies will be shown here",
                 color = Color.Black,

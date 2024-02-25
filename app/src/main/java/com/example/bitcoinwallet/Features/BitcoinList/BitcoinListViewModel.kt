@@ -19,7 +19,7 @@ class MyViewModel : ViewModel() {
         _currencyList.value = currencyList
     }
 
-    fun fetchData(btcOwned: Double) {
+    fun fetchCurrencyList(btcOwned: Double) {
         val baseCurrency = "BTC"
         val symbols = "ZAR,USD,AUD"
         val apiKey = "1yJg56aYgDPSAwO5mMhmq7I8AMxje8Zs"
