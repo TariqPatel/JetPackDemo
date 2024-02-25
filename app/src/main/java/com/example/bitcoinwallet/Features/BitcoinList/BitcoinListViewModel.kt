@@ -21,7 +21,14 @@ class MyViewModel : ViewModel() {
         _currencyList.value = currencyList
     }
 
+    private val _isButtonEnabled = mutableStateOf(true)
+    val isButtonEnabled: State<Boolean> get() = _isButtonEnabled
+    fun setButtonEnabled(isEnabled: Boolean) {
+        _isButtonEnabled.value = isEnabled
+    }
+
     fun fetchCurrencyList(btcOwned: Double) {
+        setButtonEnabled(false)
         val baseCurrency = Constants.BASE_CURRENCY
         val symbols = Constants.SYMBOLS
         val apiKey = Constants.API_KEY
@@ -30,6 +37,7 @@ class MyViewModel : ViewModel() {
 
         call.enqueue(object : Callback<CurrencyResponse> {
             override fun onResponse(call: Call<CurrencyResponse>, response: Response<CurrencyResponse>) {
+                setButtonEnabled(true)
                 if (response.isSuccessful) {
                     val apiResponse = response.body()
 
@@ -54,6 +62,7 @@ class MyViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<CurrencyResponse>, t: Throwable) {
+                setButtonEnabled(true)
                 println(t)
             }
         })

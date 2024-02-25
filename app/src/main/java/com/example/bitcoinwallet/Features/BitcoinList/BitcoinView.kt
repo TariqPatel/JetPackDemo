@@ -85,6 +85,7 @@ fun CurrencyConverterView(bitCoinListViewModel: MyViewModel = viewModel()) {
                 appPreferences.saveInputValue(bitCoinAmount)
                 hideKeyboard(context)
             },
+            enabled = bitCoinListViewModel.isButtonEnabled.value,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
