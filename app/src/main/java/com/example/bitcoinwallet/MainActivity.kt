@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -65,13 +66,12 @@ fun MyComposable(viewModel: MyViewModel = viewModel()) {
             Text(text = item, modifier = Modifier.padding(16.dp))
         }
     }
-}
-
-class MyViewModel : ViewModel() {
-    private val _dataList = mutableStateOf(listOf("Item 1", "Item 2"))
-    val dataList: State<List<String>> = _dataList
-
-    fun updateDataList(newList: List<String>) {
-        _dataList.value = newList
+    Button(onClick = { handleButtonClick(viewModel) }) {
+        Text("Click me!")
     }
 }
+
+fun handleButtonClick(viewModel: MyViewModel) {
+    viewModel.makeApiCall()
+}
+
