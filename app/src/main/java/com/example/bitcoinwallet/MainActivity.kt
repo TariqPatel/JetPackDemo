@@ -28,6 +28,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -80,6 +81,7 @@ fun CurrencyConverterView(viewModel: MyViewModel = viewModel()) {
                 .fillMaxWidth()
                 .padding(8.dp),
             keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(
