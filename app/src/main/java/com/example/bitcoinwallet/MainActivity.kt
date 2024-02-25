@@ -48,33 +48,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun CurrencyConverterViewPreview() {
     BitcoinWalletTheme {
-        Greeting("Android")
-    }
-}
-
-@Composable
-fun MyComposable(viewModel: MyViewModel = viewModel()) {
-    val currencyList by viewModel.currencyList
-
-    LazyColumn {
-        itemsIndexed(currencyList) { index, currency ->
-            Text(text = currency.currencyValue, modifier = Modifier.padding(16.dp))
-        }
-    }
-    Button(onClick = { handleButtonClick(viewModel) }) {
-        Text("Click me!")
+        CurrencyConverterView()
     }
 }
 
@@ -89,11 +67,11 @@ fun CurrencyConverterView(viewModel: MyViewModel = viewModel()) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // EditText for user input
         OutlinedTextField(
             value = inputValue.toString(),
             onValueChange = {
                 inputValue = it.toDoubleOrNull() ?: 0.0
+                viewModel.updateInputValue(inputValue = inputValue)
             },
             label = { Text("Enter Amount") },
             modifier = Modifier
@@ -109,7 +87,6 @@ fun CurrencyConverterView(viewModel: MyViewModel = viewModel()) {
             )
         )
 
-        // Button to trigger some action (e.g., update the list)
         Button(
             onClick = {
                 viewModel.makeApiCall()
@@ -121,8 +98,6 @@ fun CurrencyConverterView(viewModel: MyViewModel = viewModel()) {
         ) {
             Text("Update List")
         }
-
-        // List to display CurrencyModels
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -148,7 +123,4 @@ fun hideKeyboard(context: Context) {
     imm?.hideSoftInputFromWindow(view?.windowToken, 0)
 }
 
-fun handleButtonClick(viewModel: MyViewModel) {
-    viewModel.makeApiCall()
-}
 

@@ -1,6 +1,7 @@
 package com.example.bitcoinwallet
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
@@ -11,9 +12,15 @@ import java.io.IOException
 class MyViewModel : ViewModel() {
     private val _currencyList = mutableStateOf <List<CurrencyModel>>(emptyList())
     val currencyList: State<List<CurrencyModel>> = _currencyList
+    private val _inputValue = mutableStateOf(1.0)
+    val inputValue: State<Double> = _inputValue
 
     fun updateDataList(currencyList: List<CurrencyModel>) {
         _currencyList.value = currencyList
+    }
+
+    fun updateInputValue(inputValue: Double) {
+        _inputValue.value = inputValue
     }
 
     fun makeApiCall() {
@@ -37,13 +44,17 @@ class MyViewModel : ViewModel() {
                 val gson = Gson()
                 val apiResponse = gson.fromJson(responseBody, CurrencyResponse::class.java)
 
+                val zarCalculated = apiResponse.rates.zar * inputValue.value
+                val usdCalculated = apiResponse.rates.usd * inputValue.value
+                val audCalculated = apiResponse.rates.aud * inputValue.value
+
                 if (apiResponse.success) {
                     val zarCurrency = CurrencyModel(currencyName = "ZAR",
-                                                    currencyValue = apiResponse.rates.zar.toString())
+                                                    currencyValue = zarCalculated.toString())
                     val usdCurrency = CurrencyModel(currencyName = "USD",
-                                                    currencyValue = apiResponse.rates.usd.toString())
+                                                    currencyValue = usdCalculated.toString())
                     val audCurrency = CurrencyModel(currencyName = "AUD",
-                                                    currencyValue = apiResponse.rates.aud.toString())
+                                                    currencyValue = audCalculated.toString())
 
                     val currencyList = listOf(
                         zarCurrency,
