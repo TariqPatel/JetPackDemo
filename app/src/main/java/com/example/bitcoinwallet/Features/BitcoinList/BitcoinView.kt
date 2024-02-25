@@ -51,6 +51,8 @@ fun CurrencyConverterView(bitCoinListViewModel: MyViewModel = viewModel()) {
     val fetchListBtnText: String = stringResource(id = R.string.fetch_bitcoin_btn)
     val viewBitcoinDescriptionText: String = stringResource(id = R.string.view_bitcoin_list_description)
     val bitcoinInputTitle: String = stringResource(id = R.string.bitcoin_input_text)
+    val currencyText: String = stringResource(id = R.string.bitcoin_input_text)
+    val valueText: String = stringResource(id = R.string.bitcoin_input_text)
 
     Column(
         modifier = Modifier
@@ -104,8 +106,8 @@ fun CurrencyConverterView(bitCoinListViewModel: MyViewModel = viewModel()) {
             ) {
                 itemsIndexed(currencyList) { index, currency ->
                     Text(
-                        text = "Currency: ${currency.currencyName}\n" +
-                                "Value: ${currency.currencyValue}",
+                        text = "$currencyText ${currency.currencyName}\n" +
+                                "$valueText ${currency.currencyValue}",
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp),
