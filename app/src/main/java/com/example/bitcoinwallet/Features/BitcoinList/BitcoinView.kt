@@ -96,7 +96,8 @@ fun CurrencyConverterView(bitCoinListViewModel: MyViewModel = viewModel()) {
         )
         Button(
             onClick = {
-                bitCoinListViewModel.fetchCurrencyList(btcOwned = bitCoinAmount)
+                //bitCoinListViewModel.fetchCurrencyList(btcOwned = bitCoinAmount)
+                bitCoinListViewModel.fetchFluctuationCurrencyList(btcOwned = bitCoinAmount)
                 appPreferences.saveInputValue(bitCoinAmount)
                 hideKeyboard(context)
             },
@@ -130,6 +131,25 @@ fun CurrencyConverterView(bitCoinListViewModel: MyViewModel = viewModel()) {
                             .fillMaxWidth()
                             .padding(8.dp),
                         color = Color.Black,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    var fluctuationValue = ""
+                    var color = Color.Black
+                    if (currency.fluctuationValue == "Equal") {
+                        fluctuationValue = "No Change in value"
+                    } else if (currency.fluctuationValue == "Gain") {
+                        fluctuationValue = "Whoooo! This has increased!"
+                        color = Color.White
+                    } else if (currency.fluctuationValue == "Loss") {
+                        fluctuationValue = "Eish! This has gone down."
+                        color = Color.Red
+                    }
+                    Text(
+                        text = fluctuationValue,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        color = color,
                         style = MaterialTheme.typography.titleLarge
                     )
                     Divider(
