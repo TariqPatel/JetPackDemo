@@ -4,6 +4,9 @@
     <string name="fetch_bitcoin_btn">Fetch values for your Bitcoin</string>
     <string name="currency">Currency:</string>
     <string name="value">Value:</string>
+    <string name="gain">Whoooo! This has increased!</string>
+    <string name="equal">No Change in value</string>
+    <string name="loss">Eish! This has gone down.</string>
     <string name="view_bitcoin_list_description"> Your Bitcoin value for different currencies will be shown here</string>
 </resources>
 

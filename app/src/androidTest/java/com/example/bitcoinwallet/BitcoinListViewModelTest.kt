@@ -1,5 +1,6 @@
 package com.example.bitcoinwallet
 
+import com.example.bitcoinwallet.Enums.FluctuationState
 import com.example.bitcoinwallet.Features.BitcoinList.BitcoinListViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Test

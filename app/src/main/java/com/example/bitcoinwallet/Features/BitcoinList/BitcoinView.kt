@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -36,11 +35,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.bitcoinwallet.FluctuationState
+import com.example.bitcoinwallet.Enums.FluctuationState
 import com.example.bitcoinwallet.Helpers.AppPreferences
 import com.example.bitcoinwallet.R
 import com.example.bitcoinwallet.ui.theme.BitcoinWalletTheme
@@ -54,18 +52,21 @@ fun CurrencyConverterView(bitCoinListViewModel: BitcoinListViewModel = viewModel
     val currencyList by bitCoinListViewModel.currencyList
     val context = LocalContext.current
 
-    //Text from strings file for View
+    //Text from strings file used for View
     val fetchListBtnText: String = stringResource(id = R.string.fetch_bitcoin_btn)
     val viewBitcoinDescriptionText: String = stringResource(id = R.string.view_bitcoin_list_description)
     val bitcoinInputTitle: String = stringResource(id = R.string.bitcoin_input_text)
     val currencyText: String = stringResource(id = R.string.currency)
     val valueText: String = stringResource(id = R.string.value)
+    val gainText: String = stringResource(id = R.string.gain)
+    val equalText: String = stringResource(id = R.string.equal)
+    val lossText: String = stringResource(id = R.string.loss)
 
-    val booleanFlag by bitCoinListViewModel.messageFlag
+    val messageFlag by bitCoinListViewModel.messageFlag
     val toastMessage by bitCoinListViewModel.toastMessage
 
-    if (booleanFlag) {
-        LaunchedEffect(booleanFlag) {
+    if (messageFlag) {
+        LaunchedEffect(messageFlag) {
             Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
             bitCoinListViewModel.toggleMessageFlag()
         }
@@ -98,7 +99,6 @@ fun CurrencyConverterView(bitCoinListViewModel: BitcoinListViewModel = viewModel
         )
         Button(
             onClick = {
-                //bitCoinListViewModel.fetchCurrencyList(btcOwned = bitCoinAmount)
                 bitCoinListViewModel.fetchFluctuationCurrencyList(btcOwned = bitCoinAmount)
                 appPreferences.saveInputValue(bitCoinAmount)
                 hideKeyboard(context)
@@ -141,14 +141,14 @@ fun CurrencyConverterView(bitCoinListViewModel: BitcoinListViewModel = viewModel
 
                     when (currency.fluctuationValue) {
                         FluctuationState.EQUAL -> {
-                            fluctuationValue = "No Change in value"
+                            fluctuationValue = equalText
                         }
                         FluctuationState.GAIN -> {
-                            fluctuationValue = "Whoooo! This has increased!"
+                            fluctuationValue = gainText
                             color = Color.Green
                         }
                         FluctuationState.LOSS -> {
-                            fluctuationValue = "Eish! This has gone down."
+                            fluctuationValue = lossText
                             color = Color.Red
                         }
                     }
