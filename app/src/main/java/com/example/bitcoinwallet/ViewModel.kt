@@ -1,7 +1,6 @@
 package com.example.bitcoinwallet
 
 import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
@@ -12,7 +11,6 @@ import java.io.IOException
 class MyViewModel : ViewModel() {
     private val _currencyList = mutableStateOf <List<CurrencyModel>>(emptyList())
     val currencyList: State<List<CurrencyModel>> = _currencyList
-    private val _inputValue = mutableStateOf(1.0)
 
     fun updateDataList(currencyList: List<CurrencyModel>) {
         _currencyList.value = currencyList
