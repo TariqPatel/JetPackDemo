@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.bitcoinwallet.API.ResponseModels.CurrencyResponse
 import com.example.bitcoinwallet.API.ResponseModels.FluctuationResponse
 import com.example.bitcoinwallet.API.RetrofitClient
+import com.example.bitcoinwallet.FluctuationState
 import com.example.bitcoinwallet.Helpers.Constants
 import com.example.bitcoinwallet.Models.CurrencyModel
 import com.example.bitcoinwallet.R
@@ -68,11 +69,11 @@ class MyViewModel : ViewModel() {
 
                     // Create CurrencyModel objects
                     val zarCurrency = CurrencyModel(
-                        "ZAR", zarCalculated.toString(),"Equal")
+                        "ZAR", zarCalculated.toString(),FluctuationState.EQUAL)
                     val usdCurrency = CurrencyModel(
-                        "USD", usdCalculated.toString(), "Equal")
+                        "USD", usdCalculated.toString(), FluctuationState.EQUAL)
                     val audCurrency = CurrencyModel(
-                        "AUD", audCalculated.toString(), "Equal")
+                        "AUD", audCalculated.toString(), FluctuationState.EQUAL)
 
                     // Create a list of CurrencyModel
                     val currencyList = listOf(zarCurrency, usdCurrency, audCurrency)
@@ -169,16 +170,16 @@ class MyViewModel : ViewModel() {
         return calendar.time
     }
 
-    fun calculateRateDifference(startRate: Double?, endRate: Double?): String {
+    fun calculateRateDifference(startRate: Double?, endRate: Double?): FluctuationState {
         if (endRate != null && startRate != null) {
             if (endRate == startRate) {
-                return "Equal"
+                return FluctuationState.EQUAL
             } else if (endRate > startRate) {
-                return "Gain"
+                return FluctuationState.GAIN
             } else if (endRate < startRate) {
-                return "Loss"
+                return FluctuationState.LOSS
             }
         }
-        return "Equal"
+        return FluctuationState.EQUAL
     }
 }

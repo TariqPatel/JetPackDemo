@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.bitcoinwallet.FluctuationState
 import com.example.bitcoinwallet.Helpers.AppPreferences
 import com.example.bitcoinwallet.R
 import com.example.bitcoinwallet.ui.theme.BitcoinWalletTheme
@@ -135,12 +136,12 @@ fun CurrencyConverterView(bitCoinListViewModel: MyViewModel = viewModel()) {
                     )
                     var fluctuationValue = ""
                     var color = Color.Black
-                    if (currency.fluctuationValue == "Equal") {
+                    if (currency.fluctuationValue == FluctuationState.EQUAL) {
                         fluctuationValue = "No Change in value"
-                    } else if (currency.fluctuationValue == "Gain") {
+                    } else if (currency.fluctuationValue == FluctuationState.GAIN) {
                         fluctuationValue = "Whoooo! This has increased!"
                         color = Color.White
-                    } else if (currency.fluctuationValue == "Loss") {
+                    } else if (currency.fluctuationValue == FluctuationState.LOSS) {
                         fluctuationValue = "Eish! This has gone down."
                         color = Color.Red
                     }
