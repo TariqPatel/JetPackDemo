@@ -2,7 +2,7 @@ package com.example.bitcoinwallet
 
 import com.google.gson.annotations.SerializedName
 
-data class ApiResponse(
+data class CurrencyResponse(
     @SerializedName("success")
     val success: Boolean,
     @SerializedName("timestamp")

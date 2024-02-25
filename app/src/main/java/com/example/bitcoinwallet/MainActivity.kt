@@ -59,11 +59,11 @@ fun GreetingPreview() {
 
 @Composable
 fun MyComposable(viewModel: MyViewModel = viewModel()) {
-    val dataList by viewModel.dataList
+    val currencyList by viewModel.currencyList
 
     LazyColumn {
-        itemsIndexed(dataList) { index, item ->
-            Text(text = item, modifier = Modifier.padding(16.dp))
+        itemsIndexed(currencyList) { index, currency ->
+            Text(text = currency.currencyValue, modifier = Modifier.padding(16.dp))
         }
     }
     Button(onClick = { handleButtonClick(viewModel) }) {

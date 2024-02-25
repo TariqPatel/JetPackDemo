@@ -9,11 +9,11 @@ import okhttp3.*
 import java.io.IOException
 
 class MyViewModel : ViewModel() {
-    private val _dataList = mutableStateOf(listOf("Item 1", "Item 2"))
-    val dataList: State<List<String>> = _dataList
+    private val _currencyList = mutableStateOf <List<CurrencyModel>>(emptyList())
+    val currencyList: State<List<CurrencyModel>> = _currencyList
 
-    fun updateDataList(newList: List<String>) {
-        _dataList.value = newList
+    fun updateDataList(currencyList: List<CurrencyModel>) {
+        _currencyList.value = currencyList
     }
 
     fun makeApiCall() {
@@ -35,7 +35,7 @@ class MyViewModel : ViewModel() {
             override fun onResponse(call: Call, response: Response) {
                 val responseBody = response.body?.string()
                 val gson = Gson()
-                val apiResponse = gson.fromJson(responseBody, ApiResponse::class.java)
+                val apiResponse = gson.fromJson(responseBody, CurrencyResponse::class.java)
 
                 // Access the parsed data
                 if (apiResponse.success) {
@@ -46,6 +46,20 @@ class MyViewModel : ViewModel() {
                     val usdRate = apiResponse.rates.usd
                     val audRate = apiResponse.rates.aud
 
+                    val zarCurrency = CurrencyModel(currencyName = "ZAR",
+                                                    currencyValue = apiResponse.rates.zar.toString())
+                    val usdCurrency = CurrencyModel(currencyName = "USD",
+                                                    currencyValue = apiResponse.rates.usd.toString())
+                    val audCurrency = CurrencyModel(currencyName = "AUD",
+                                                    currencyValue = apiResponse.rates.aud.toString())
+
+                    val currencyList = listOf(
+                        zarCurrency,
+                        usdCurrency,
+                        usdCurrency,
+                        // Add more items as needed
+                    )
+                    updateDataList(currencyList)
                     // Now you can use these values as needed
                     println("Timestamp: $timestamp")
                     println("Base Currency: $baseCurrency")
