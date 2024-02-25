@@ -97,7 +97,7 @@ fun CurrencyConverterView(viewModel: MyViewModel = viewModel()) {
 
         Button(
             onClick = {
-                viewModel.makeApiCall(btcOwned = inputValue)
+                viewModel.fetchData(btcOwned = inputValue)
                 appPreferences.saveInputValue(inputValue)
                 hideKeyboard(context)
             },

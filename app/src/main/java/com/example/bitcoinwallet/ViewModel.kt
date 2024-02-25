@@ -7,6 +7,9 @@ import com.google.gson.Gson
 
 import okhttp3.*
 import java.io.IOException
+import retrofit2.Callback
+import retrofit2.Call
+import retrofit2.Response
 
 class MyViewModel : ViewModel() {
     private val _currencyList = mutableStateOf <List<CurrencyModel>>(emptyList())
@@ -16,52 +19,40 @@ class MyViewModel : ViewModel() {
         _currencyList.value = currencyList
     }
 
-    fun makeApiCall(btcOwned: Double) {
-        val baseUrl = "https://api.apilayer.com/fixer/latest"
+    fun fetchData(btcOwned: Double) {
         val baseCurrency = "BTC"
         val symbols = "ZAR,USD,AUD"
         val apiKey = "1yJg56aYgDPSAwO5mMhmq7I8AMxje8Zs"
 
-        val url = "$baseUrl?base=$baseCurrency&symbols=$symbols"
+        val call = RetrofitClient.currencyApiService.getCurrencyRates(baseCurrency, symbols, apiKey)
 
-        val request = Request.Builder()
-            .url(url)
-            .addHeader("apikey", apiKey)
-            .build()
+        call.enqueue(object : Callback<CurrencyResponse> {
+            override fun onResponse(call: Call<CurrencyResponse>, response: Response<CurrencyResponse>) {
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
 
-        val client = OkHttpClient()
+                    // Perform currency calculations
+                    val zarCalculated = apiResponse?.rates?.zar?.times(btcOwned) ?: 0.0
+                    val usdCalculated = apiResponse?.rates?.usd?.times(btcOwned) ?: 0.0
+                    val audCalculated = apiResponse?.rates?.aud?.times(btcOwned) ?: 0.0
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onResponse(call: Call, response: Response) {
-                val responseBody = response.body?.string()
-                val gson = Gson()
-                val apiResponse = gson.fromJson(responseBody, CurrencyResponse::class.java)
+                    // Create CurrencyModel objects
+                    val zarCurrency = CurrencyModel("ZAR", zarCalculated.toString())
+                    val usdCurrency = CurrencyModel("USD", usdCalculated.toString())
+                    val audCurrency = CurrencyModel("AUD", audCalculated.toString())
 
-                val zarCalculated = apiResponse.rates.zar * btcOwned
-                val usdCalculated = apiResponse.rates.usd * btcOwned
-                val audCalculated = apiResponse.rates.aud * btcOwned
+                    // Create a list of CurrencyModel
+                    val currencyList = listOf(zarCurrency, usdCurrency, audCurrency)
 
-                if (apiResponse.success) {
-                    val zarCurrency = CurrencyModel(currencyName = "ZAR",
-                                                    currencyValue = zarCalculated.toString())
-                    val usdCurrency = CurrencyModel(currencyName = "USD",
-                                                    currencyValue = usdCalculated.toString())
-                    val audCurrency = CurrencyModel(currencyName = "AUD",
-                                                    currencyValue = audCalculated.toString())
-
-                    val currencyList = listOf(
-                        zarCurrency,
-                        usdCurrency,
-                        audCurrency
-                    )
+                    // Update ViewModel with the currency list
                     updateDataList(currencyList)
                 } else {
                     println("API call unsuccessful")
                 }
             }
 
-            override fun onFailure(call: Call, e: IOException) {
-                println(e)
+            override fun onFailure(call: Call<CurrencyResponse>, t: Throwable) {
+                println(t)
             }
         })
     }
