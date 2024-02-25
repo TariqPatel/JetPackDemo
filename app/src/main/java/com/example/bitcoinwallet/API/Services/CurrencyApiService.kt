@@ -1,5 +1,6 @@
-package com.example.bitcoinwallet
+package com.example.bitcoinwallet.API.Services
 
+import com.example.bitcoinwallet.API.ResponseModels.CurrencyResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header

@@ -1,4 +1,4 @@
-package com.example.bitcoinwallet
+package com.example.bitcoinwallet.Features.Home
 
 import android.content.Context
 import android.os.Bundle
@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.bitcoinwallet.Helpers.AppPreferences
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

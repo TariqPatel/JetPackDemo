@@ -1,4 +1,4 @@
-package com.example.bitcoinwallet
+package com.example.bitcoinwallet.Helpers
 
 import android.content.Context
 import android.content.SharedPreferences

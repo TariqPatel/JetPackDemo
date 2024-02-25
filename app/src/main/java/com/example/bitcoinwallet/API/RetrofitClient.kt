@@ -1,5 +1,6 @@
-package com.example.bitcoinwallet
+package com.example.bitcoinwallet.API
 
+import com.example.bitcoinwallet.API.Services.CurrencyApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

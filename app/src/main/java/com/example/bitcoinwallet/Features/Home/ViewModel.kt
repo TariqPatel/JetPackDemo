@@ -1,12 +1,12 @@
-package com.example.bitcoinwallet
+package com.example.bitcoinwallet.Features.Home
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.google.gson.Gson
+import com.example.bitcoinwallet.API.ResponseModels.CurrencyResponse
+import com.example.bitcoinwallet.API.RetrofitClient
+import com.example.bitcoinwallet.Models.CurrencyModel
 
-import okhttp3.*
-import java.io.IOException
 import retrofit2.Callback
 import retrofit2.Call
 import retrofit2.Response

@@ -1,4 +1,4 @@
-package com.example.bitcoinwallet
+package com.example.bitcoinwallet.API.ResponseModels
 
 import com.google.gson.annotations.SerializedName
 

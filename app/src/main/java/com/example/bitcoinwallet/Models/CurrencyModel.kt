@@ -1,4 +1,4 @@
-package com.example.bitcoinwallet
+package com.example.bitcoinwallet.Models
 
 data class CurrencyModel(
     val currencyName: String,
