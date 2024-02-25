@@ -45,7 +45,7 @@ import com.example.bitcoinwallet.R
 import com.example.bitcoinwallet.ui.theme.BitcoinWalletTheme
 
 @Composable
-fun CurrencyConverterView(bitCoinListViewModel: MyViewModel = viewModel()) {
+fun CurrencyConverterView(bitCoinListViewModel: BitcoinListViewModel = viewModel()) {
     val appPreferences = AppPreferences(LocalContext.current)
     var bitCoinAmount by remember {
         mutableStateOf(appPreferences.getInputValue())
