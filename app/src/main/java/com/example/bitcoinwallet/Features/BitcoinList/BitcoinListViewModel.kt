@@ -135,7 +135,11 @@ class BitcoinListViewModel : ViewModel() {
         }
     }
 
-    //DEPRECATED but keeping here for the assessment (Would usually remove it in a project)
+    /*
+       DEPRECATED but keeping it here for the assessment
+       (Would usually remove it in a project as this function was
+       replaced by the Fluctuation endpoint)
+    */
     fun fetchCurrencyList(btcOwned: Double) {
         setButtonEnabled(false)
         val baseCurrency = Constants.BASE_CURRENCY
