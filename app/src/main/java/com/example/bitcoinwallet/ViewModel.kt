@@ -37,15 +37,7 @@ class MyViewModel : ViewModel() {
                 val gson = Gson()
                 val apiResponse = gson.fromJson(responseBody, CurrencyResponse::class.java)
 
-                // Access the parsed data
                 if (apiResponse.success) {
-                    val timestamp = apiResponse.timestamp
-                    val baseCurrency = apiResponse.base
-                    val date = apiResponse.date
-                    val zarRate = apiResponse.rates.zar
-                    val usdRate = apiResponse.rates.usd
-                    val audRate = apiResponse.rates.aud
-
                     val zarCurrency = CurrencyModel(currencyName = "ZAR",
                                                     currencyValue = apiResponse.rates.zar.toString())
                     val usdCurrency = CurrencyModel(currencyName = "USD",
@@ -56,19 +48,10 @@ class MyViewModel : ViewModel() {
                     val currencyList = listOf(
                         zarCurrency,
                         usdCurrency,
-                        usdCurrency,
-                        // Add more items as needed
+                        audCurrency
                     )
                     updateDataList(currencyList)
-                    // Now you can use these values as needed
-                    println("Timestamp: $timestamp")
-                    println("Base Currency: $baseCurrency")
-                    println("Date: $date")
-                    println("ZAR Rate: $zarRate")
-                    println("USD Rate: $usdRate")
-                    println("AUD Rate: $audRate")
                 } else {
-                    // Handle the case where the API call was not successful
                     println("API call unsuccessful")
                 }
             }
