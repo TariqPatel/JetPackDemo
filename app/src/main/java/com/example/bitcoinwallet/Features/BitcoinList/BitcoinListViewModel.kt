@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.bitcoinwallet.API.ResponseModels.CurrencyResponse
 import com.example.bitcoinwallet.API.RetrofitClient
+import com.example.bitcoinwallet.Helpers.Constants
 import com.example.bitcoinwallet.Models.CurrencyModel
 
 import retrofit2.Callback
@@ -20,9 +21,9 @@ class MyViewModel : ViewModel() {
     }
 
     fun fetchCurrencyList(btcOwned: Double) {
-        val baseCurrency = "BTC"
-        val symbols = "ZAR,USD,AUD"
-        val apiKey = "1yJg56aYgDPSAwO5mMhmq7I8AMxje8Zs"
+        val baseCurrency = Constants.BASE_CURRENCY
+        val symbols = Constants.SYMBOLS
+        val apiKey = Constants.API_KEY
 
         val call = RetrofitClient.currencyApiService.getCurrencyRates(baseCurrency, symbols, apiKey)
 
